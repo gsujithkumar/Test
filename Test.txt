@@ -1,3 +1,31 @@
 aws cloudwatch put-metric-data --metric-name Buffers --namespace MyNameSpace --unit Bytes --value 231434333
 
 aws cloudwatch put-metric-data --metric-name TomcatMetricLogs --namespace TomcatMetrics --statistic-values survivor0=`echo $jstat|cut -d ' ' -f 1`,survivor1=`echo $jstat|cut -d ' ' -f 2`,eden=`echo $jstat|cut -d ' ' -f 3`,old=`echo $jstat|cut -d ' ' -f 4`,permanent=`echo $jstat|cut -d ' ' -f 5`, young=`echo $jstat|cut -d ' ' -f 6`,youngtime=`echo $jstat|cut -d ' ' -f 7`,fgc=`echo $jstat|cut -d ' ' -f 8`,fgctime=`echo $jstat|cut -d ' ' -f 9`,gct=`echo $jstat|cut -d ' ' -f 10`
+
+
+
+****************************************************
+
+
+vi /var/awslogs/etc/awslogs.conf 
+
+
+[syslog] 
+
+datetime_format = %b %d %H:%M:%S 
+
+file = /var/log/messages/Filename-Here (Path of the File)
+
+buffer_duration = 5000  
+
+log_stream_name = {instance_id} 
+
+initial_position = start_of_file  
+
+log_group_name = Unique_ID
+
+
+
+systemctl daemon-reload 
+
+systemctl restart awslogs 
